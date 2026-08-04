@@ -24,7 +24,7 @@ const PORT = process.env.PORT || 5001;
 connectDB();
 
 // middleware that parses incoming HTTP requests with JSON payloads.
-app.use(express.json);
+app.use(express.json());
 
 app.use("/api/notes", noteRoutes);
 

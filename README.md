@@ -48,11 +48,11 @@ ask-my-note/
 | Method | Endpoint | What it does | Status |
 | --- | --- | --- | --- |
 | GET | `/api/notes` | Get all notes | ✅ Working |
-| POST | `/api/notes` | Create a new note | ⚠️ In progress |
-| PUT | `/api/notes/:id` | Update a note | ❌ Placeholder |
-| DELETE | `/api/notes/:id` | Delete a note | ❌ Placeholder |
+| POST | `/api/notes` | Create a new note | ✅ Working |
+| PUT | `/api/notes/:id` | Update a note | ✅ Working |
+| DELETE | `/api/notes/:id` | Delete a note | ✅ Working |
 
-**Note:** The update and delete controllers only return placeholder messages right now — the actual logic hasn't been written yet. The POST controller also needs a small fix (`newNote.save` should be `newNote.save()`).
+All four endpoints are implemented. Validation: POST requires `title` and `content` (400 otherwise); PUT requires at least one of them. Missing/invalid ids return `404`.
 
 ## Setup & run locally
 
@@ -97,6 +97,5 @@ ask-my-note/
 
 ## What's next
 
-- [ ] Complete POST controller (`newNote.save()` fix)
-- [ ] Implement PUT and DELETE logic
-- [ ] Build the frontend in the `fronted/` folder
+- [ ] Build the frontend in the `frontend/` folder
+- [ ] Add authentication / user accounts
