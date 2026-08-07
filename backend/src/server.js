@@ -11,6 +11,7 @@ import express from "express";
 import noteRoutes from "./routes/notesRoutes.js";
 import { connectDB } from "./config/db.js";
 import dotenv from "dotenv";
+import rateLimiter from "./middleware/rateLimiter.js";
 
 dotenv.config({ path: "./src/.env" });
 
@@ -21,13 +22,23 @@ const app = express();
 
 const PORT = process.env.PORT || 5001;
 
-connectDB();
+// connectDB();     we first connect port then database this is bad
 
 // middleware that parses incoming HTTP requests with JSON payloads.
-app.use(express.json());
+app.use(express.json()); // this middleware just parse JSON bodies: req.body in the () const { title, content } = req.body;) in controller\
+
+app.use(rateLimiter);
+
+// our simple custom middleware
+// app.use((req, res, next) => {
+//   console.log(`Req method is ${req.method} and Req URL is ${req.url} `);
+//   next();
+// });
 
 app.use("/api/notes", noteRoutes);
 
-app.listen(PORT, () => {
-  console.log("server started on PORT:", PORT);
-});
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log("server started on PORT:", PORT);
+  });
+}); // database connect first then port
