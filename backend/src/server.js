@@ -7,10 +7,12 @@
 
 // mongodb+srv://<db_username>:jJLlspFEiqSZelYV@cluster0.s4lro0l.mongodb.net/?appName=Cluster0
 
+import cors from "cors"; // cors for browser security purpose
+import dotenv from "dotenv";
 import express from "express";
+
 import noteRoutes from "./routes/notesRoutes.js";
 import { connectDB } from "./config/db.js";
-import dotenv from "dotenv";
 import rateLimiter from "./middleware/rateLimiter.js";
 
 dotenv.config({ path: "./src/.env" });
@@ -24,9 +26,14 @@ const PORT = process.env.PORT || 5001;
 
 // connectDB();     we first connect port then database this is bad
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
+
 // middleware that parses incoming HTTP requests with JSON payloads.
 app.use(express.json()); // this middleware just parse JSON bodies: req.body in the () const { title, content } = req.body;) in controller\
-
 app.use(rateLimiter);
 
 // our simple custom middleware
