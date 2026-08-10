@@ -1,17 +1,11 @@
 import axios from "axios";
-import toast from "react-hot-toast";
+
+// in production, there's no localhost so we have to make this dynamic
+const BASE_URL =
+  import.meta.env.MODE === "development" ? "http://localhost:5001/api" : "/api";
 
 const api = axios.create({
-  baseURL: "http://localhost:5001/api",
-  withCredentials: true,
+  baseURL: BASE_URL,
 });
-
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    toast.error(error.response?.data?.message || "Something went wrong");
-    return Promise.reject(error);
-  }
-);
 
 export default api;
