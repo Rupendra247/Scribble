@@ -12,16 +12,17 @@ const CreatePage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // this do not refresh the page when the form is submitted
 
     if (!title.trim() || !content.trim()) {
-      toast.error("All fields are required");
+      toast.error("All fields are ");
       return;
     }
 
     setLoading(true);
     try {
       await api.post("/notes", {
+        // here we are using the api instance from axios.js to make a POST request to the /notes endpoint with the title and content of the note as the request body create in axios,js.
         title,
         content,
       });
@@ -33,7 +34,7 @@ const CreatePage = () => {
       if (error.response.status === 429) {
         toast.error("Slow down! You're creating notes too fast", {
           duration: 4000,
-          icon: "💀",
+          icon: "🕐",
         });
       } else {
         toast.error("Failed to create note");
@@ -63,7 +64,7 @@ const CreatePage = () => {
                   <input
                     type="text"
                     placeholder="Note Title"
-                    className="input input-bordered"
+                    className="input input-bordered w-full"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
@@ -75,7 +76,7 @@ const CreatePage = () => {
                   </label>
                   <textarea
                     placeholder="Write your note here..."
-                    className="textarea textarea-bordered h-32"
+                    className="textarea textarea-bordered h-32 w-full"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                   />
