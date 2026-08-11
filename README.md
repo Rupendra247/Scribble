@@ -1,4 +1,4 @@
-# Ask My Note
+# Messy Notes
 
 A simple Notes REST API built with Node.js, Express, and MongoDB (Mongoose).
 
@@ -8,14 +8,14 @@ A backend-only application that lets you **create, read, update, and delete note
 
 ## Tech stack
 
-| Technology | What it is used for |
-| --- | --- |
-| Node.js | JavaScript runtime (runs the server) |
-| Express | Web framework for handling routes and HTTP requests |
-| Mongoose | ODM (Object Data Modeling) to talk to MongoDB |
-| MongoDB Atlas | Cloud-hosted database (free cluster) |
-| dotenv | Loads environment variables from a `.env` file |
-| nodemon | Auto-restarts the server when you change code |
+| Technology    | What it is used for                                 |
+| ------------- | --------------------------------------------------- |
+| Node.js       | JavaScript runtime (runs the server)                |
+| Express       | Web framework for handling routes and HTTP requests |
+| Mongoose      | ODM (Object Data Modeling) to talk to MongoDB       |
+| MongoDB Atlas | Cloud-hosted database (free cluster)                |
+| dotenv        | Loads environment variables from a `.env` file      |
+| nodemon       | Auto-restarts the server when you change code       |
 
 ## Project structure
 
@@ -45,18 +45,19 @@ ask-my-note/
 
 ## API endpoints
 
-| Method | Endpoint | What it does | Status |
-| --- | --- | --- | --- |
-| GET | `/api/notes` | Get all notes | ✅ Working |
-| POST | `/api/notes` | Create a new note | ✅ Working |
-| PUT | `/api/notes/:id` | Update a note | ✅ Working |
-| DELETE | `/api/notes/:id` | Delete a note | ✅ Working |
+| Method | Endpoint         | What it does      | Status     |
+| ------ | ---------------- | ----------------- | ---------- |
+| GET    | `/api/notes`     | Get all notes     | ✅ Working |
+| POST   | `/api/notes`     | Create a new note | ✅ Working |
+| PUT    | `/api/notes/:id` | Update a note     | ✅ Working |
+| DELETE | `/api/notes/:id` | Delete a note     | ✅ Working |
 
 All four endpoints are implemented. Validation: POST requires `title` and `content` (400 otherwise); PUT requires at least one of them. Missing/invalid ids return `404`.
 
 ## Setup & run locally
 
 ### Prerequisites
+
 - Node.js installed
 - A MongoDB Atlas account (or local MongoDB)
 - A `.env` file with your credentials
@@ -64,19 +65,23 @@ All four endpoints are implemented. Validation: POST requires `title` and `conte
 ### Steps
 
 1. **Install dependencies**
+
    ```bash
    cd backend
    npm install
    ```
 
 2. **Create the `.env` file** (in `backend/src/.env`)
+
    ```
    MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/notes_db
    PORT=5001
    ```
+
    > Replace `<username>` and `<password>` with your real MongoDB credentials. Never commit this file.
 
 3. **Run the server**
+
    ```bash
    npm run dev     # with nodemon (auto-restart on changes)
    # or
@@ -94,8 +99,3 @@ All four endpoints are implemented. Validation: POST requires `title` and `conte
 - `npm run dev` uses `nodemon`, `npm start` uses plain `node` (used for deployment).
 - The `.env` file and `node_modules/` are ignored by git via `.gitignore` so secrets and dependencies are never committed.
 - An "endpoint" = URL + HTTP method (e.g. `GET /api/notes`).
-
-## What's next
-
-- [ ] Build the frontend in the `frontend/` folder
-- [ ] Add authentication / user accounts
