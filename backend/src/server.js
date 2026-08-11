@@ -11,12 +11,15 @@ import cors from "cors"; // cors for browser security purpose
 import dotenv from "dotenv";
 import express from "express";
 import path from "path";
+import { fileURLToPath } from "url";
 
 import noteRoutes from "./routes/notesRoutes.js";
 import { connectDB } from "./config/db.js";
 import rateLimiter from "./middleware/rateLimiter.js";
 
-dotenv.config({ path: "./src/.env" });
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+dotenv.config({ path: path.join(__dirname, ".env") });
 
 // what is Endpoint
 // Endpoint is combination of URL + HTTP method that lets client interact with specific resources
@@ -24,8 +27,6 @@ dotenv.config({ path: "./src/.env" });
 const app = express();
 
 const PORT = process.env.PORT || 5001;
-
-const __dirname = path.resolve();
 
 // connectDB();     we first connect port then database this is bad
 
@@ -45,10 +46,10 @@ app.use(rateLimiter);
 
 app.use("/api/notes", noteRoutes);
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(path.join(__dirname, "../fronted/dist"))));
+if (process.env.NODE_ENV === "production" || !process.env.NODE_ENV) {
+  app.use(express.static(path.join(__dirname, "../../fronted/dist")));
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../fronted", "dist", "index.html"));
+    res.sendFile(path.join(__dirname, "../../fronted", "dist", "index.html"));
   });
 }
 
