@@ -10,6 +10,7 @@
 import cors from "cors"; // cors for browser security purpose
 import dotenv from "dotenv";
 import express from "express";
+import path from "path";
 
 import noteRoutes from "./routes/notesRoutes.js";
 import { connectDB } from "./config/db.js";
@@ -24,13 +25,13 @@ const app = express();
 
 const PORT = process.env.PORT || 5001;
 
+const __dirname = path.resolve();
+
 // connectDB();     we first connect port then database this is bad
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-  })
-);
+if (process.env.NODE_ENV !== "production") {
+  app.use(cors({ origin: "http://localhost:5173" })); // cors for browser security purpose
+}
 
 // middleware that parses incoming HTTP requests with JSON payloads.
 app.use(express.json()); // this middleware just parse JSON bodies: req.body in the () const { title, content } = req.body;) in controller\
@@ -43,6 +44,13 @@ app.use(rateLimiter);
 // });
 
 app.use("/api/notes", noteRoutes);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(path.join(__dirname, "../fronted/dist"))));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../fronted", "dist", "index.html"));
+  });
+}
 
 connectDB().then(() => {
   app.listen(PORT, () => {

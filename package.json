@@ -1,0 +1,22 @@
+{
+  "name": "scribble",
+  "version": "1.0.0",
+  "description": "A simple Notes REST API built with Node.js, Express, and MongoDB (Mongoose).",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix backend && npm install --prefix fronted && npm run build --prefix fronted",
+    "start": "npm run start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rupendra247/Scribble.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Rupendra247/Scribble/issues"
+  },
+  "homepage": "https://github.com/Rupendra247/Scribble#readme"
+}
